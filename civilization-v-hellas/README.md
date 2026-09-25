@@ -1,6 +1,6 @@
 # HELLAS · 希腊文明
 
-单人 3D 回合制策略游戏。功能、提示词和在线体验见[仓库总览](../README.md)。
+由一句话需求生成的单人 3D 回合制策略游戏。功能、提示词和在线体验见[仓库总览](../README.md)。
 
 ## 游戏内容
 
@@ -60,8 +60,6 @@ python3 -m http.server 4173 --directory dist
 ## 代码职责
 
 `data.js` 定义内容；`engine.js` 处理游戏规则；`world.js` 绘制 3D 场景；`panels.js` 生成管理界面；`app.js` 连接输入、规则、画面与存档；`i18n.js` 使用 i18next 处理双语，`locales/en.js` 保存英文文案。游戏规则与存档中的名称保持稳定，在显示时翻译。
-
-修改源码后重新执行 `npm test` 和 `npm run build`。`dist/` 是构建产物，不直接编辑或提交。
 
 ## 已知范围
 

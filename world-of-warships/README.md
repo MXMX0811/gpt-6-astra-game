@@ -1,6 +1,6 @@
 # IRON TIDE · 钢铁潮汐
 
-受《战舰世界》启发的单人 3D 海战游戏。选择一艘传奇舰艇，参加 5v5 AI 舰队战，通过占点或击沉敌舰赢得对局。
+由一句话需求生成、受《战舰世界》启发的单人 3D 海战游戏。选择一艘传奇舰艇，参加 5v5 AI 舰队战，通过占点或击沉敌舰赢得对局。
 
 [仓库总览](../README.md) · [现有在线版本](https://iron-tide-naval-0925.z1050014709.chatgpt.site)（公开访问）
 
@@ -71,11 +71,11 @@ python3 -m http.server 4173 --directory dist
 - `src/style.css` / `index.template.html`：界面样式与页面结构。
 - `assets/`：随构建内联的原始贴图与图标；`tests/`：可独立运行的规则检查。
 
-Three.js 固定为原项目使用的 0.180.0。Water、Sky 和 BufferGeometryUtils 从同一个 npm 包导入；esbuild 将游戏和依赖内联到 HTML。运行素材随仓库提供。
+项目使用 Three.js 0.180.0。Water、Sky 和 BufferGeometryUtils 从同一个 npm 包导入；esbuild 将游戏和依赖内联到 HTML。运行素材随仓库提供。
 
 ## 验证
 
-`npm test` 运行 6 项规则测试：船体随朝向旋转的命中范围、岛屿遮挡、AP 装甲与过穿、HE 起火、双方占点和争夺时暂停占领。入库时另外验证单文件构建、母港、出击、战斗界面与暂停返回。
+`npm test` 运行 6 项规则测试：船体随朝向旋转的命中范围、岛屿遮挡、AP 装甲与过穿、HE 起火、双方占点和争夺时暂停占领。实机检查覆盖母港、出击、战斗界面与暂停返回。
 
 ## 已知范围
 
