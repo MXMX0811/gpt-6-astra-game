@@ -23,18 +23,20 @@ python3 -m http.server 4173 --directory dist
 
 ## 舰队与玩法
 
-| 舰船 | 类型 | 主炮 | 特点 |
-| --- | --- | --- | --- |
-| 大和 Yamato | 战列舰 | 9 × 460 mm | 重炮、厚装甲、侦察机 |
-| 俾斯麦 Bismarck | 战列舰 | 8 × 380 mm | 近距副炮、水听 |
-| 衣阿华 Iowa | 战列舰 | 9 × 406 mm | 高速航行、侦察机 |
-| 岛风 Shimakaze | 驱逐舰 | 6 × 127 mm | 三组鱼雷、烟幕、引擎增压 |
+| 舰船 | 类型 | 主炮 | 装填 | 特点 |
+| --- | --- | --- | --- | --- |
+| 大和 Yamato | 战列舰 | 9 × 460 mm | 10 秒 | 重炮、厚装甲、侦察机 |
+| 俾斯麦 Bismarck | 战列舰 | 8 × 380 mm | 8 秒 | 近距副炮、水听 |
+| 衣阿华 Iowa | 战列舰 | 9 × 406 mm | 9 秒 | 高速航行、侦察机 |
+| 岛风 Shimakaze | 驱逐舰 | 6 × 127 mm | 3 秒 | 三组鱼雷、烟幕、引擎增压 |
 
 - **火控**：炮塔独立转向与装填、单塔射击与齐射、飞行弹道、提前量参考、AP / HE 切换、跳弹、穿透、核心区与过度击穿。
 - **生存**：火灾、进水、损害管制、战列舰维修、烟幕隐蔽、开炮暴露和岛屿遮挡。
-- **战术**：群岛地图、5v5 AI、三档难度、A / B / C 占领区、目标锁定、战术海图与舰队战况。
+- **战术**：64 × 64 km 群岛地图、5v5 AI、三档难度、A / B / C 占领区、目标锁定、战术海图与舰队战况。双方从开阔海域展开，AI 按舰种保持交战距离，并绕岛航行。
 - **胜负**：率先达到 1,000 分、歼灭敌舰，或 10 分钟结束时比较分数；战后显示伤害、命中和击沉统计。
 - **画面与声音**：程序化舰模、海面反射与天空、尾流与炮火效果、浏览器合成音效、画质和音量设置。
+
+岛风鱼雷射程为 14 km，航行 1.2 km 后引信生效，每组装填 45 秒。注意提前量与鱼雷警报，通过调整航速和航向规避来袭火力。
 
 ## 操作
 
@@ -66,6 +68,7 @@ python3 -m http.server 4173 --directory dist
 - `src/main.js`：母港、场景、海面与天空、舰船选择和应用入口。
 - `src/battle.js`：战斗循环、操舰、火控、AI、消耗品、战斗界面与结算。
 - `src/ships.js`：四艘舰船的数据、船体、舰桥与炮塔模型。
+- `src/battlefield.js`：海域、岛屿、出生编队、交战距离与绕岛航行。
 - `src/mechanics.js`：碰撞、装甲与占点计算。
 - `src/effects.js`：炮火、烟雾、尾流效果与合成音效。
 - `src/style.css` / `index.template.html`：界面样式与页面结构。
@@ -75,7 +78,7 @@ python3 -m http.server 4173 --directory dist
 
 ## 验证
 
-`npm test` 运行 13 项测试，覆盖鼠标视角、中央准星、望远镜瞄准、左右转舵、暂停恢复，以及船体碰撞、岛屿遮挡、AP / HE 装甲与占点。
+`npm test` 覆盖鼠标视角、瞄准、转舵、出生点、完整船体与岛屿碰撞、武器射程、鱼雷引信、AP / HE 装甲及占点；另有四种舰船的 10 分钟舰队航行模拟和实弹交战检查。
 
 ## 已知范围
 
@@ -85,6 +88,7 @@ python3 -m http.server 4173 --directory dist
 
 - [《战舰世界》操作指南](https://wiki.worldofwarships.com/Ship:Controls)
 - [弹药与装甲机制](https://wiki.worldofwarships.com/Ship:Ammo)
+- [鱼雷规则](https://wiki.worldofwarships.com/Ship:Torpedoes)
 - [消耗品](https://wiki.worldofwarships.com/Ship:Consumables)
 - [第三方素材与许可](./THIRD_PARTY_NOTICES.md)
 

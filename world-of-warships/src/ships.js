@@ -1,10 +1,11 @@
 import * as T from 'three';
 import {mergeGeometries} from 'three/addons/utils/BufferGeometryUtils.js';
+export const SPEED_PER_KNOT=.38;
 export const SHIPS={
- yamato:{name:'大和',en:'YAMATO',nation:'日本',tier:'X',type:'战列舰',year:1941,length:263,beam:38.9,hp:97200,knots:27,guns:'460 mm',battery:'3 × 3',reload:18,damage:14800,range:2600,armor:410,turn:.095,torps:0,description:'九门 460 毫米主炮。远距离重击，厚重装甲。',accent:'#c5a879'},
- bismarck:{name:'俾斯麦',en:'BISMARCK',nation:'德国',tier:'VIII',type:'战列舰',year:1940,length:251,beam:36,hp:69200,knots:30,guns:'380 mm',battery:'4 × 2',reload:14,damage:11600,range:2300,armor:320,turn:.115,torps:0,description:'八门 380 毫米主炮。近距离副炮，坚固装甲。',accent:'#a6bbc3'},
- iowa:{name:'衣阿华',en:'IOWA',nation:'美国',tier:'IX',type:'战列舰',year:1943,length:270,beam:33,hp:79000,knots:33,guns:'406 mm',battery:'3 × 3',reload:16,damage:13500,range:2500,armor:307,turn:.11,torps:0,description:'九门 406 毫米主炮。高速航行，精准火力。',accent:'#94b9c3'},
- shimakaze:{name:'岛风',en:'SHIMAKAZE',nation:'日本',tier:'X',type:'驱逐舰',year:1943,length:129,beam:11.2,hp:17900,knots:39,guns:'127 mm',battery:'3 × 2',reload:4,damage:2100,range:1500,armor:19,turn:.24,torps:15,description:'十五具鱼雷发射管。高速隐蔽，烟幕掩护。',accent:'#aab9a5'}
+ yamato:{name:'大和',en:'YAMATO',nation:'日本',tier:'X',type:'战列舰',year:1941,length:263,beam:38.9,hp:97200,knots:27,guns:'460 mm',battery:'3 × 3',reload:10,damage:8600,range:2600,engagementRange:1850,armor:410,turn:.055,torps:0,description:'九门 460 毫米主炮。远距离重击，厚重装甲。',accent:'#c5a879'},
+ bismarck:{name:'俾斯麦',en:'BISMARCK',nation:'德国',tier:'VIII',type:'战列舰',year:1940,length:251,beam:36,hp:69200,knots:30,guns:'380 mm',battery:'4 × 2',reload:8,damage:6800,range:2300,engagementRange:1450,armor:320,turn:.065,torps:0,description:'八门 380 毫米主炮。近距离副炮，坚固装甲。',accent:'#a6bbc3'},
+ iowa:{name:'衣阿华',en:'IOWA',nation:'美国',tier:'IX',type:'战列舰',year:1943,length:270,beam:33,hp:79000,knots:33,guns:'406 mm',battery:'3 × 3',reload:9,damage:7800,range:2500,engagementRange:1750,armor:307,turn:.06,torps:0,description:'九门 406 毫米主炮。高速航行，精准火力。',accent:'#94b9c3'},
+ shimakaze:{name:'岛风',en:'SHIMAKAZE',nation:'日本',tier:'X',type:'驱逐舰',year:1943,length:129,beam:11.2,hp:17900,knots:39,guns:'127 mm',battery:'3 × 2',reload:3,damage:1600,range:1500,engagementRange:1050,armor:19,turn:.14,torps:15,torpedo:{speed:32,range:1400,armingDistance:120,reload:45,damage:13000,warningRange:520},description:'十五具鱼雷发射管。高速隐蔽，烟幕掩护。',accent:'#aab9a5'}
 };
 const mat={hull:new T.MeshStandardMaterial({color:0x69757b,roughness:.67,metalness:.4}),deck:new T.MeshStandardMaterial({color:0x9c8b69,roughness:.93}),dark:new T.MeshStandardMaterial({color:0x29343c,roughness:.55,metalness:.5}),steel:new T.MeshStandardMaterial({color:0x8d9699,roughness:.5,metalness:.5}),glass:new T.MeshStandardMaterial({color:0x17282f,roughness:.25,metalness:.7}),red:new T.MeshStandardMaterial({color:0x532c2b,roughness:.9}),white:new T.MeshStandardMaterial({color:0xd6d3bd,roughness:.7})};
 function box(g,x,y,z,w,h,d,m='hull'){const a=new T.Mesh(new T.BoxGeometry(w,h,d),mat[m]);a.position.set(x,y,z);g.add(a);return a;}

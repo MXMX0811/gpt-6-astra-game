@@ -48,7 +48,7 @@
 | 游戏 | 类型 | 源码目录 | JS 模块 | 构建产物 | 在线体验 |
 | --- | --- | --- | --- | --- | --- |
 | HELLAS · 希腊文明 | 六角格回合制策略 | [`civilization-v-hellas/`](./civilization-v-hellas/) | 9 | 约 785 KB | [公开游玩](https://hellas-age-of-alexander.z1050014709.chatgpt.site) |
-| IRON TIDE · 钢铁潮汐 | 5v5 实时海战 | [`world-of-warships/`](./world-of-warships/) | 5 | 约 958 KB | [公开游玩](https://iron-tide-naval-0925.z1050014709.chatgpt.site) |
+| IRON TIDE · 钢铁潮汐 | 5v5 实时海战 | [`world-of-warships/`](./world-of-warships/) | 6 | 约 960 KB | [公开游玩](https://iron-tide-naval-0925.z1050014709.chatgpt.site) |
 
 模块数不含第三方库与测试；大小为当前压缩构建的 HTML 文件大小，未计 HTTP 传输压缩。
 
@@ -136,7 +136,7 @@ python3 -m http.server 4173 --directory dist
 │   ├── THIRD_PARTY_NOTICES.md
 │   └── README.md
 ├── world-of-warships/             # IRON TIDE · 钢铁潮汐
-│   ├── src/                      # main / battle / ships / mechanics / effects
+│   ├── src/                      # 入口、战斗、舰船、战场、规则与特效
 │   ├── assets/                   # 水面法线贴图与图标
 │   ├── licenses/                 # 随附第三方许可证
 │   ├── tests/                    # 碰撞、装甲、弹种与占点检查
@@ -155,7 +155,7 @@ python3 -m http.server 4173 --directory dist
 ## 验证
 
 - **HELLAS**：26 项规则测试覆盖文明发展、外交、战斗、移动与胜利；另有中英文本地化检查和最多 80 回合的游戏模拟。
-- **钢铁潮汐**：13 项测试覆盖鼠标视角、瞄准、左右转舵、暂停恢复、船体碰撞、岛屿遮挡、AP / HE 装甲与占点。
+- **钢铁潮汐**：规则检查覆盖视角、瞄准、转舵、出生点、碰撞、鱼雷、装甲与占点；另有四种舰船的 10 分钟舰队航行模拟和实弹交战检查。
 - **独立构建**：两款游戏均可在各自目录运行 `npm test` 和 `npm run build`。
 
 ## 说明
