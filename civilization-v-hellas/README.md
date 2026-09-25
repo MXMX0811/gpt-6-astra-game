@@ -2,9 +2,9 @@
 
 由一句话需求生成的单人 3D 回合制策略游戏。
 
-[仓库总览](../README.md) · [在线游玩](https://hellas-age-of-alexander.z1050014709.chatgpt.site)（公开访问）
+[仓库总览](../README.md) · [在线游玩](https://astra-civilization-v-hellas.pages.dev)（公开访问）
 
-[![HELLAS · 希腊文明实机画面：雅典、单位与 3D 六角地图；点击公开游玩](../assets/hellas-teaser.jpg)](https://hellas-age-of-alexander.z1050014709.chatgpt.site)
+[![HELLAS · 希腊文明实机画面：雅典、单位与 3D 六角地图；点击公开游玩](../assets/hellas-teaser.jpg)](https://astra-civilization-v-hellas.pages.dev)
 
 回合制策略 · 科技与政策 · 中英双语 · 公开游玩
 

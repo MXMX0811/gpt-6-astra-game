@@ -12,12 +12,13 @@
   <img src="https://img.shields.io/badge/Three.js-r180-049EF4?style=for-the-badge&logo=threedotjs&logoColor=white" alt="Three.js r180" />
   <img src="https://img.shields.io/badge/Build-esbuild-FFCF00?style=for-the-badge" alt="esbuild" />
   <img src="https://img.shields.io/badge/Output-Single_HTML-213C48?style=for-the-badge" alt="单文件 HTML" />
+  <img src="https://img.shields.io/badge/Hosted_on-Cloudflare_Pages-F38020?style=for-the-badge&logo=cloudflarepages&logoColor=white" alt="Cloudflare Pages 公开托管" />
 </p>
 
 <table>
   <tr>
-    <td width="50%" align="center"><a href="https://hellas-age-of-alexander.z1050014709.chatgpt.site"><img src="./assets/hellas-teaser.jpg" alt="HELLAS · 希腊文明实机画面：雅典、单位与 3D 六角地图；点击公开游玩" width="100%" /></a><br/><b>HELLAS · 希腊文明</b><br/><sub>回合制策略 · 科技与政策 · 中英双语</sub><br/><a href="https://hellas-age-of-alexander.z1050014709.chatgpt.site">公开游玩 ↗</a> · <a href="./civilization-v-hellas/">源码与玩法</a><br/><sub>hellas-age-of-alexander.z1050014709.chatgpt.site</sub></td>
-    <td width="50%" align="center"><a href="https://iron-tide-naval-0925.z1050014709.chatgpt.site"><img src="./assets/iron-tide-teaser.jpg" alt="IRON TIDE · 钢铁潮汐实机画面：传奇战舰与北太平洋群岛；点击公开游玩" width="100%" /></a><br/><b>IRON TIDE · 钢铁潮汐</b><br/><sub>5v5 海战 · 64 km 海域 · FPS 式瞄准</sub><br/><a href="https://iron-tide-naval-0925.z1050014709.chatgpt.site">公开游玩 ↗</a> · <a href="./world-of-warships/">源码与玩法</a><br/><sub>iron-tide-naval-0925.z1050014709.chatgpt.site</sub></td>
+    <td width="50%" align="center"><a href="https://astra-civilization-v-hellas.pages.dev"><img src="./assets/hellas-teaser.jpg" alt="HELLAS · 希腊文明实机画面：雅典、单位与 3D 六角地图；点击公开游玩" width="100%" /></a><br/><b>HELLAS · 希腊文明</b><br/><sub>回合制策略 · 科技与政策 · 中英双语</sub><br/><a href="https://astra-civilization-v-hellas.pages.dev">公开游玩 ↗</a> · <a href="./civilization-v-hellas/">源码与玩法</a><br/><sub>astra-civilization-v-hellas.pages.dev</sub></td>
+    <td width="50%" align="center"><a href="https://astra-world-of-warships.pages.dev"><img src="./assets/iron-tide-teaser.jpg" alt="IRON TIDE · 钢铁潮汐实机画面：传奇战舰与北太平洋群岛；点击公开游玩" width="100%" /></a><br/><b>IRON TIDE · 钢铁潮汐</b><br/><sub>5v5 海战 · 64 km 海域 · FPS 式瞄准</sub><br/><a href="https://astra-world-of-warships.pages.dev">公开游玩 ↗</a> · <a href="./world-of-warships/">源码与玩法</a><br/><sub>astra-world-of-warships.pages.dev</sub></td>
   </tr>
 </table>
 
@@ -47,8 +48,8 @@
 
 | 游戏 | 类型 | 源码目录 | JS 模块 | 构建产物 | 在线体验 |
 | --- | --- | --- | --- | --- | --- |
-| HELLAS · 希腊文明 | 六角格回合制策略 | [`civilization-v-hellas/`](./civilization-v-hellas/) | 9 | 约 785 KB | [公开游玩](https://hellas-age-of-alexander.z1050014709.chatgpt.site) |
-| IRON TIDE · 钢铁潮汐 | 5v5 实时海战 | [`world-of-warships/`](./world-of-warships/) | 6 | 约 960 KB | [公开游玩](https://iron-tide-naval-0925.z1050014709.chatgpt.site) |
+| HELLAS · 希腊文明 | 六角格回合制策略 | [`civilization-v-hellas/`](./civilization-v-hellas/) | 9 | 约 785 KB | [公开游玩](https://astra-civilization-v-hellas.pages.dev) |
+| IRON TIDE · 钢铁潮汐 | 5v5 实时海战 | [`world-of-warships/`](./world-of-warships/) | 6 | 约 960 KB | [公开游玩](https://astra-world-of-warships.pages.dev) |
 
 模块数不含第三方库与测试；大小为当前压缩构建的 HTML 文件大小，未计 HTTP 传输压缩。
 
@@ -88,8 +89,8 @@
 
 | 游戏 | 入口 | 访问范围 |
 | --- | --- | --- |
-| HELLAS · 希腊文明 | [开始游玩](https://hellas-age-of-alexander.z1050014709.chatgpt.site) | 公开，无需登录 |
-| IRON TIDE · 钢铁潮汐 | [打开海战](https://iron-tide-naval-0925.z1050014709.chatgpt.site) | 公开，无需登录 |
+| HELLAS · 希腊文明 | [开始游玩](https://astra-civilization-v-hellas.pages.dev) | 公开，无需登录 |
+| IRON TIDE · 钢铁潮汐 | [打开海战](https://astra-world-of-warships.pages.dev) | 公开，无需登录 |
 
 两个游戏均可通过下述方式本地运行。游戏运行不需要 API 密钥、数据库或服务端；字体样式会请求 Google Fonts。
 
