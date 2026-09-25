@@ -1,0 +1,17 @@
+{
+  "name": "world-of-warships",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "IRON TIDE: a 3D naval combat game inspired by World of Warships",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "dependencies": {
+    "three": "0.180.0"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
+  }
+}
