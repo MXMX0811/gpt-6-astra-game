@@ -2,9 +2,11 @@
 
 由一句话需求生成、受《战舰世界》启发的单人 3D 海战游戏。选择一艘传奇舰艇，参加 5v5 AI 舰队战，通过占点或击沉敌舰赢得对局。
 
-[仓库总览](../README.md) · [现有在线版本](https://iron-tide-naval-0925.z1050014709.chatgpt.site)（公开访问）
+[仓库总览](../README.md) · [在线游玩](https://iron-tide-naval-0925.z1050014709.chatgpt.site)（公开访问）
 
-![钢铁潮汐母港实机画面](../assets/iron-tide-teaser.jpg)
+[![IRON TIDE · 钢铁潮汐实机画面：传奇战舰与北太平洋群岛；点击公开游玩](../assets/iron-tide-teaser.jpg)](https://iron-tide-naval-0925.z1050014709.chatgpt.site)
+
+5v5 海战 · 64 km 海域 · FPS 式瞄准 · 公开游玩
 
 ## 安装、验证与构建
 

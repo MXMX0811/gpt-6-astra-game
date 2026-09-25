@@ -11,13 +11,13 @@
   <img src="https://img.shields.io/badge/Games-2-D1B27A?style=for-the-badge" alt="2 Games" />
   <img src="https://img.shields.io/badge/Three.js-r180-049EF4?style=for-the-badge&logo=threedotjs&logoColor=white" alt="Three.js r180" />
   <img src="https://img.shields.io/badge/Build-esbuild-FFCF00?style=for-the-badge" alt="esbuild" />
-  <img src="https://img.shields.io/badge/Output-Single_HTML-213C48?style=for-the-badge" alt="Single HTML" />
+  <img src="https://img.shields.io/badge/Output-Single_HTML-213C48?style=for-the-badge" alt="单文件 HTML" />
 </p>
 
 <table>
   <tr>
-    <td width="50%" align="center"><a href="./civilization-v-hellas/"><img src="./assets/hellas-teaser.jpg" alt="HELLAS 实机画面：雅典与 3D 六角地图" width="100%" /></a><br/><b>HELLAS · 希腊文明</b><br/><sub>建设城市，探索爱琴海，带领希腊走向胜利。</sub></td>
-    <td width="50%" align="center"><a href="./world-of-warships/"><img src="./assets/iron-tide-teaser.jpg" alt="IRON TIDE 实机画面：大和号与母港舰队选择" width="100%" /></a><br/><b>IRON TIDE · 钢铁潮汐</b><br/><sub>指挥传奇战舰，在群岛之间争夺制海权。</sub></td>
+    <td width="50%" align="center"><a href="https://hellas-age-of-alexander.z1050014709.chatgpt.site"><img src="./assets/hellas-teaser.jpg" alt="HELLAS · 希腊文明实机画面：雅典、单位与 3D 六角地图；点击公开游玩" width="100%" /></a><br/><b>HELLAS · 希腊文明</b><br/><sub>回合制策略 · 科技与政策 · 中英双语</sub><br/><a href="https://hellas-age-of-alexander.z1050014709.chatgpt.site">公开游玩 ↗</a> · <a href="./civilization-v-hellas/">源码与玩法</a><br/><sub>hellas-age-of-alexander.z1050014709.chatgpt.site</sub></td>
+    <td width="50%" align="center"><a href="https://iron-tide-naval-0925.z1050014709.chatgpt.site"><img src="./assets/iron-tide-teaser.jpg" alt="IRON TIDE · 钢铁潮汐实机画面：传奇战舰与北太平洋群岛；点击公开游玩" width="100%" /></a><br/><b>IRON TIDE · 钢铁潮汐</b><br/><sub>5v5 海战 · 64 km 海域 · FPS 式瞄准</sub><br/><a href="https://iron-tide-naval-0925.z1050014709.chatgpt.site">公开游玩 ↗</a> · <a href="./world-of-warships/">源码与玩法</a><br/><sub>iron-tide-naval-0925.z1050014709.chatgpt.site</sub></td>
   </tr>
 </table>
 
@@ -88,8 +88,8 @@
 
 | 游戏 | 入口 | 访问范围 |
 | --- | --- | --- |
-| HELLAS · 希腊文明 | [开始游玩](https://hellas-age-of-alexander.z1050014709.chatgpt.site) | 公开，无需站点所有者账号 |
-| IRON TIDE · 钢铁潮汐 | [打开海战](https://iron-tide-naval-0925.z1050014709.chatgpt.site) | 公开，无需站点所有者账号 |
+| HELLAS · 希腊文明 | [开始游玩](https://hellas-age-of-alexander.z1050014709.chatgpt.site) | 公开，无需登录 |
+| IRON TIDE · 钢铁潮汐 | [打开海战](https://iron-tide-naval-0925.z1050014709.chatgpt.site) | 公开，无需登录 |
 
 两个游戏均可通过下述方式本地运行。游戏运行不需要 API 密钥、数据库或服务端；字体样式会请求 Google Fonts。
 

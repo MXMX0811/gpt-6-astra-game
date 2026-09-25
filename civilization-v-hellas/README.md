@@ -1,6 +1,12 @@
 # HELLAS · 希腊文明
 
-由一句话需求生成的单人 3D 回合制策略游戏。功能、提示词和在线体验见[仓库总览](../README.md)。
+由一句话需求生成的单人 3D 回合制策略游戏。
+
+[仓库总览](../README.md) · [在线游玩](https://hellas-age-of-alexander.z1050014709.chatgpt.site)（公开访问）
+
+[![HELLAS · 希腊文明实机画面：雅典、单位与 3D 六角地图；点击公开游玩](../assets/hellas-teaser.jpg)](https://hellas-age-of-alexander.z1050014709.chatgpt.site)
+
+回合制策略 · 科技与政策 · 中英双语 · 公开游玩
 
 ## 游戏内容
 
