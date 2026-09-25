@@ -6,7 +6,7 @@
   "description": "A 3D turn-based Greek civilization strategy game",
   "scripts": {
     "build": "node build.mjs",
-    "test": "node tests/engine.test.mjs && node tests/i18n.test.mjs"
+    "test": "node tests/engine.test.mjs && node --test tests/combat.test.mjs && node tests/i18n.test.mjs"
   },
   "dependencies": {
     "i18next": "25.5.2",

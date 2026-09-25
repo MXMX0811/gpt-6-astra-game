@@ -726,5 +726,9 @@ export const en = {
   "可移动": "Reachable",
   "已选单位": "Selected",
   "攻击目标": "Attack",
-  "最终文明评分 · 第 {{v0}} 回合": "Final civilization score · Turn {{v0}}"
+  "最终文明评分 · 第 {{v0}} 回合": "Final civilization score · Turn {{v0}}",
+  "部队已驻扎。新回合可唤醒并移动，防守反击不消耗你的行动。": "Fortified. Wake and move on your next turn. Defending does not use your action.",
+  "移动消耗 {{v0}} · 剩余 {{v1}}": "Movement cost {{v0}} · {{v1}} remaining",
+  "回合、防守与撤退": "Turns, Defense & Retreat",
+  "每次结束回合只执行一轮敌军行动。相邻敌军不会让己方自动进攻；遭到近战攻击时会防守反击。新回合恢复移动力，驻扎单位可唤醒后移动、攻击或撤退。从同一敌军控制区内的一格走到另一格会耗尽移动力；离开控制区正常计费。只要还剩移动力，就能进入一个合法地块，即使其地形费用高于剩余点数。": "Ending a turn runs one enemy phase. Nearby enemies never make your units attack automatically; melee defenders retaliate. Movement resets on your new turn. Wake fortified units to move, attack or retreat. Moving between two tiles controlled by the same enemy uses all remaining movement; leaving its zone costs normal movement. Any remaining movement permits one legal step, even onto more expensive terrain."
 };

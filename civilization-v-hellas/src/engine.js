@@ -53,15 +53,49 @@ policyCost(){return Math.round(25+this.s.policies.length**1.55*13);}
 adopt(id){const p=POLICY[id];if(this.policy(id)||p.prereq&&!this.policy(p.prereq)||p.era>this.era())return this.fail('尚未满足政策的前置条件。');const cost=this.policyCost();if(this.s.culture<cost)return this.fail('文化值不足。');this.s.culture-=cost;this.s.policies.push(id);if(['collective','citizenship'].includes(id)){const c=this.owned()[0];if(c)this.spawnNear(id==='collective'?'settler':'worker','greece',c.tile);}this.log(`采纳政策：${p.name}。`,'culture');this.emit();return true;}
 fail(msg){this.error=msg;return false;}
 canEnter(u,t){const d=UNITS[u.type];if(t.terrain==='mountain'&&!d.flying)return false;if(d.naval&&!TERRAIN[t.terrain].water&&!this.cityAt(t.id))return false;if(!d.naval&&TERRAIN[t.terrain].water&&!d.flying&&(!this.has('sailing')||t.terrain==='ocean'&&!this.has('astronomy')))return false;if(t.owner&&t.owner!==u.owner){if(u.owner==='greece'&&!this.isWar(t.owner)&&(this.s.influence[t.owner]||0)<30)return false;}const same=this.unitsAt(t.id).find(v=>v.id!==u.id&&v.owner===u.owner&&!!UNITS[v.type].civilian===!!d.civilian);return !same;}
-moveCost(u,t){if(UNITS[u.type].flying||UNITS[u.type].roughFree)return 1;if(t.road&&this.at(u.tile).road)return .5;return TERRAIN[t.terrain].cost||1;}
-reachable(u){const s=this.at(u.tile),best=new Map([[s.id,0]]),queue=[s];while(queue.length){const t=queue.shift();for(const n of this.neighbors(t)){if(u.owner==='greece'&&!n.explored)continue;if(!this.canEnter(u,n))continue;if(this.unitsAt(n.id).some(x=>x.owner!==u.owner))continue;const nc=this.cityAt(n.id);if(nc&&nc.owner!==u.owner)continue;let cost=best.get(t.id)+this.moveCost(u,n);if(cost>u.moves)continue;if(!best.has(n.id)||best.get(n.id)>cost){best.set(n.id,cost);queue.push(n);}}}return best;}
+moveCost(u,to,from=this.at(u.tile)) {
+ if(UNITS[u.type].flying||UNITS[u.type].roughFree)return 1;
+ if(to.road&&from.road)return .5;
+ return TERRAIN[to.terrain].cost||1;
+}
+crossesEnemyZone(u,from,to) {
+ if(UNITS[u.type].flying)return false;
+ const water=!!TERRAIN[from.terrain].water;
+ if(!!TERRAIN[to.terrain].water!==water)return false;
+ return this.s.units.some(enemy=>{
+  const enemyType=UNITS[enemy.type],tile=this.at(enemy.tile);
+  const hostile=u.owner==='greece'?this.isWar(enemy.owner):enemy.owner==='greece'&&this.isWar(u.owner);
+  return hostile&&!enemyType.civilian&&!enemyType.flying&&!!enemyType.naval===water
+   &&!!TERRAIN[tile.terrain].water===water&&distance(from,tile)===1&&distance(to,tile)===1;
+ });
+}
+stepCost(u,from,to,remaining) {
+ // Civ V: any remaining MP permits one legal step. Crossing the same
+ // enemy unit's zone of control spends all remaining MP, without combat.
+ return this.crossesEnemyZone(u,from,to)?remaining:Math.min(remaining,this.moveCost(u,to,from));
+}
+reachable(u) {
+ const start=this.at(u.tile),best=new Map([[start.id,0]]),queue=[start];
+ while(queue.length){
+  const from=queue.shift(),spent=best.get(from.id),remaining=u.moves-spent;
+  if(remaining<=0)continue;
+  for(const to of this.neighbors(from)){
+   if(u.owner==='greece'&&!to.explored)continue;
+   if(!this.canEnter(u,to)||this.unitsAt(to.id).some(other=>other.owner!==u.owner))continue;
+   const city=this.cityAt(to.id);if(city&&city.owner!==u.owner)continue;
+   const cost=spent+this.stepCost(u,from,to,remaining);
+   if(!best.has(to.id)||cost<best.get(to.id)){best.set(to.id,cost);queue.push(to);}
+  }
+ }
+ return best;
+}
 move(id,tileId){if(this.s.victory)return false;const u=this.unit(id),dest=this.at(tileId);if(!u||u.owner!=='greece')return false;const foe=this.unitsAt(tileId).find(e=>e.owner!=='greece'&&dest.visible);const city=this.cityAt(tileId);if(foe||city&&city.owner!=='greece'){const owner=foe?.owner||city.owner;if(!this.isWar(owner))return this.fail('这片土地属于和平势力。可在外交界面宣战。');return this.attack(u,foe||city,!!(!foe&&city));}
 const costs=this.reachable(u);if(!costs.has(tileId)||tileId===u.tile)return this.fail('无法在本回合抵达此处。选择蓝色高亮地块。');u.moves-=costs.get(tileId);u.tile=tileId;u.fortified=false;u.sleep=false;u.job=null;this.onArrive(u);this.emit();return true;}
 onArrive(u){if(u.owner!=='greece')return;const t=this.at(u.tile);if(t.ruin){t.ruin=false;const prize=t.id%4;if(prize===0){this.s.gold+=65;this.log('发现古代遗迹：获得 65 金币。','gold');}else if(prize===1){this.s.culture+=25;this.log('古代遗迹留下了祖先的传说：+25 文化。','culture');}else if(prize===2){this.s.science+=25;this.log('发现远古知识：+25 科研。','science');}else{u.xp+=20;this.log('探索古代遗迹：单位获得 20 经验。','info');}}if(t.camp){t.camp=false;this.s.gold+=45;this.log('清除野蛮人营地：获得 45 金币。','gold');for(const [f,q]of Object.entries(this.s.quests))if(q==='camp'&&!this.s.questDone.includes(f)){this.s.influence[f]+=45;this.s.questDone.push(f);this.log(`完成城邦委托：${f==='sidon'?'西顿':'斯巴达'}影响力 +45。`,'gold');}}}
 strength(u,defending=false,target=null){const d=UNITS[u.type];let val=(defending?d.strength:d.ranged||d.strength);let bonus=u.promotions.length*.15;if(u.owner==='greece'){if(this.policy('warriorcode'))bonus+=.1;if(this.policy('honor_open')&&target?.owner==='barbarian')bonus+=.33;if(this.policy('discipline')&&this.s.units.some(v=>v.owner===u.owner&&v.id!==u.id&&distance(this.at(u.tile),this.at(v.tile))===1))bonus+=.15;}if(d.antiHorse&&target?.type&&UNITS[target.type].mounted)bonus+=.5;if(defending){bonus+=TERRAIN[this.at(u.tile).terrain].defense||0;if(u.fortified)bonus+=.4;}return val*(1+bonus)*(0.5+u.hp/200);}
 cityStrength(c){let v=12+c.pop+this.era()*3+c.buildings.reduce((n,b)=>n+((BUILDINGS[b]||WONDERS[b]).defense||0),0);if(c.owner==='greece'&&this.policy('oligarchy'))v*=1.3;return v;}
 combatPreview(u,target,isCity=false){let a=this.strength(u,false,target)*(isCity&&UNITS[u.type].siege?2.5:1),d=isCity?this.cityStrength(target):Math.max(1,this.strength(target,true,u));return {dealt:clamp(Math.round(30*Math.pow(a/d,1.2)),5,85),received:UNITS[u.type].ranged||!isCity&&UNITS[target.type].civilian?0:clamp(Math.round(24*Math.pow(d/a,1.2)),5,70)};}
-attack(u,target,isCity=false,ai=false){const d=UNITS[u.type];if(!d.strength)return this.fail('平民单位无法攻击。');if(u.moves<=0||u.attacked)return this.fail('这个单位本回合已完成行动。');if(distance(this.at(u.tile),this.at(target.tile))>(d.range||1))return this.fail(d.ranged?'目标不在射程内。':'近战单位需要先移动到目标旁。');if(d.ranged&&!d.flying&&this.s.tiles.some(t=>t.terrain==='mountain'&&distance(this.at(u.tile),t)===1&&distance(t,this.at(target.tile))===1))return this.fail('山脉阻挡了远程攻击视线。');const hit=this.combatPreview(u,target,isCity);target.hp-=hit.dealt;u.hp-=hit.received;u.attacked=true;u.moves=d.mounted?Math.max(0,u.moves-1):0;u.fortified=false;u.xp+=this.policy('military')&&u.owner==='greece'?10:5;
+attack(u,target,isCity=false,ai=false){const d=UNITS[u.type];if(!d.strength)return this.fail('平民单位无法攻击。');if(u.moves<=0||u.attacked)return this.fail('这个单位本回合已完成行动。');if(distance(this.at(u.tile),this.at(target.tile))>(d.range||1))return this.fail(d.ranged?'目标不在射程内。':'近战单位需要先移动到目标旁。');if(d.ranged&&!d.flying&&this.s.tiles.some(t=>t.terrain==='mountain'&&distance(this.at(u.tile),t)===1&&distance(t,this.at(target.tile))===1))return this.fail('山脉阻挡了远程攻击视线。');const hit=this.combatPreview(u,target,isCity);target.hp-=hit.dealt;u.hp-=hit.received;u.attacked=true;u.moves=d.mounted?Math.max(0,u.moves-1):0;u.fortified=false;u.sleep=false;u.job=null;u.xp+=this.policy('military')&&u.owner==='greece'?10:5;
 if(isCity&&target.hp<=0){if(d.ranged){target.hp=1;}else{const former=target.owner;target.owner=u.owner;target.hp=Math.floor(target.maxHp/2);target.pop=Math.max(1,target.pop-1);target.project=null;target.production=0;for(const t of this.s.tiles)if(t.owner===former&&distance(t,this.at(target.tile))<=3)t.owner=u.owner;u.tile=target.tile;this.log(`${target.name}被${u.owner==='greece'?'希腊军队':'敌军'}占领！`,'war');if(former==='persia'&&u.owner==='greece')this.win('征服胜利','波斯波利斯已被攻克。希腊的旗帜飘扬在敌人的首都。');}}
 else if(!isCity&&target.hp<=0){this.s.units=this.s.units.filter(v=>v.id!==target.id);if(!d.ranged&&u.hp>0){u.tile=target.tile;this.onArrive(u);}if(u.owner==='greece'){this.log(`${d.name}击败${UNITS[target.type].name}。`,'war');if(this.policy('honor_open'))this.s.culture+=10;}}
 if(u.hp<=0){this.s.units=this.s.units.filter(v=>v.id!==u.id);this.log(`${d.name}在战斗中阵亡。`,'war');}this.s.lastCombat={tile:target.tile,dealt:hit.dealt,received:hit.received,id:++this.s.serial};if(!ai)this.emit();return true;}
@@ -94,7 +128,10 @@ for(const u of s.units.filter(u=>u.owner==='greece')){if(u.job){const speed=(thi
 if(!u.attacked&&(u.fortified||u.moves===UNITS[u.type].moves)){u.hp=Math.min(100,u.hp+(this.at(u.tile).owner==='greece'?20:10));}}
 for(const f of Object.keys(s.influence)){if(!this.isWar(f)){const base=this.policy('consulates')?20:0;s.influence[f]=s.influence[f]>base?Math.max(base,s.influence[f]-(this.policy('patronage_open')?.375:.5)):Math.min(base,s.influence[f]+2);}}
 s.routes=s.routes.filter(r=>--r.left>0&&!this.isWar(r.owner));if(s.turn%10===0&&s.influence.sparta>=60&&!this.isWar('sparta')){this.spawnNear(this.has('bronze')?'hoplite':'warrior','greece',this.owned()[0].tile);this.log('盟友斯巴达赠送了一支军队。','gold');}
-this.aiTurn();for(const u of s.units){u.moves=u.sleep||u.job?0:UNITS[u.type].moves;u.attacked=false;}
+this.aiTurn();
+// A standing fortify/sleep order does not spend the new turn's movement.
+// Defending during the AI phase never counts as the player's attack.
+for(const u of s.units){u.moves=u.job?0:UNITS[u.type].moves;u.attacked=false;}
 if(!this.owned().length)this.win('文明覆灭','最后一座希腊城市陷落了。新的历史，等待你的下一次开局。',false);
 const completeBranches=POLICIES.filter(b=>b.nodes.every(n=>this.policy(n[0]))).length;if(completeBranches>=4&&s.totalCulture>=1000)this.win('文化胜利','四条政策树已经完成，希腊思想照亮了世界。');if(s.turn>=200&&!s.victory)this.win('历史终章',`200 回合结束。希腊的最终文明评分为 ${this.score()}。`,this.score()>=s.cities.filter(c=>c.owner==='persia').reduce((a,c)=>a+c.pop*10+50,0));this.emit();return true;}
 aiTurn(){const s=this.s;for(const c of s.cities.filter(c=>c.owner!=='greece')){c.hp=Math.min(c.maxHp,c.hp+8);if(s.turn%9===0){c.pop=Math.min(12,c.pop+1);}const army=s.units.filter(u=>u.owner===c.owner);const hostile=this.isWar(c.owner);if(s.turn%(c.owner==='persia'?5:8)===0&&army.length<(c.owner==='persia'?7:3)){const tier=Math.min(this.era(),Math.floor(s.turn/30));const type=tier>=4?'rifle':tier>=3?'musket':tier>=2?(s.turn%2?'crossbow':'pikeman'):s.turn>15?(s.turn%2?'swordsman':'archer'):'warrior';this.spawnNear(type,c.owner,c.tile);}
@@ -103,7 +140,7 @@ if(hostile){const targets=s.units.filter(u=>u.owner==='greece'&&distance(this.at
 if(s.turn===22&&!this.isWar('persia')){s.wars.push('persia');this.log('大流士一世宣战！波斯军队开始向希腊进军。','war');}
 if(s.turn%12===0)for(const t of s.tiles.filter(t=>t.camp))if(s.units.filter(u=>u.owner==='barbarian').length<7)this.spawnNear(s.turn>30?'archer':'warrior','barbarian',t.id);
 for(const u of [...s.units.filter(u=>u.owner!=='greece')]){if(!this.unit(u.id))continue;u.moves=UNITS[u.type].moves;u.attacked=false;if(!this.isWar(u.owner))continue;const t=this.at(u.tile);let foes=s.units.filter(v=>v.owner==='greece');let cities=this.owned();let target=[...foes,...cities].sort((a,b)=>distance(t,this.at(a.tile))-distance(t,this.at(b.tile)))[0];if(!target)continue;const range=UNITS[u.type].range||1;let dist=distance(t,this.at(target.tile));const aggro=u.owner==='persia'?50:u.owner==='barbarian'?6:6;if(dist>aggro)continue;const home=this.s.cities.find(c=>c.owner===u.owner);if(home&&!['persia','barbarian'].includes(u.owner)&&distance(this.at(home.tile),this.at(target.tile))>3)continue;if(u.hp<30&&distance(t,this.at(target.tile))>1){u.hp+=15;continue;}
-const path=this.aiPath(u,target);for(const next of path){const cost=TERRAIN[next.terrain].cost||1;if(cost>u.moves)break;u.tile=next.id;u.moves-=cost;dist=distance(next,this.at(target.tile));if(dist<=range)break;}
+const path=this.aiPath(u,target);for(const next of path){if(u.moves<=0)break;const cost=this.stepCost(u,this.at(u.tile),next,u.moves);u.tile=next.id;u.moves-=cost;dist=distance(next,this.at(target.tile));if(dist<=range)break;}
 
 if(dist<=range&&u.moves>0)this.attack(u,target,!!target.buildings,true);
 }}

@@ -33,6 +33,10 @@ python3 -m http.server 4173 --directory dist
 
 蓝色填充与粗边框表示可移动地块，金色表示选中单位，红色表示可攻击目标。“爱琴海”位于固定的三维海域坐标，平移、缩放和旋转地图时与地形一起变化。
 
+每次结束回合只执行一轮敌方行动；敌方近战攻击会受到防守反击。新回合恢复移动力，驻扎单位可以唤醒后移动、进攻或撤退。防守不会消耗你的移动力或本回合攻击次数。
+
+沿同一敌军控制区内的相邻格移动会耗尽剩余移动力；离开其控制区正常计费。只要仍有移动力，就可以进入一个合法地块，即使地形费用高于剩余点数。悬停可移动地块可查看预计消耗与剩余移动力。按住 Enter 不会连续结束回合。
+
 语言偏好自动记忆；切换语言保留回合、选中单位、研究和视角。
 
 存档保存在当前浏览器，使用菜单中的导出和导入功能可在设备之间转移。
@@ -52,5 +56,7 @@ python3 -m http.server 4173 --directory dist
 HELLAS is a single-player 3D turn-based strategy game inspired by Greece in Civilization V. Choose **EN** in the top bar or **English** in the game menu. Your language preference is remembered; switching languages keeps your campaign and camera position.
 
 Blue tiles are reachable, gold marks the selected unit, and red marks attack targets. The Aegean Sea label is anchored to the 3D map. Drag to pan, scroll to zoom and right-drag to rotate. Click a unit, then a highlighted tile to move. Use **Enter** to end a turn, **T** for research, **P** for policies and **H** for the guide.
+
+Each End Turn runs one enemy phase. Defending does not consume your next turn’s movement or attack. Wake fortified units to move or retreat. Moving between two tiles controlled by the same enemy ends movement; leaving its zone costs normal movement. Any remaining movement permits one legal step. Holding Enter does not advance successive turns.
 
 Run `npm ci`, `npm test`, then `npm run build`. Serve `dist/` with a static HTTP server. The generated `dist/index.html` contains the game, Three.js and both languages. Google Fonts is requested separately.
