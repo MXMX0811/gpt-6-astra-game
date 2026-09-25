@@ -1,0 +1,17 @@
+{
+  "name": "hellas-age-of-alexander",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A 3D turn-based Greek civilization strategy game",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node tests/engine.test.mjs"
+  },
+  "dependencies": {
+    "three": "0.180.0"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
+  }
+}
